@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Cloud Storage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar glass">
+  <h2>☁ Smart Cloud Storage</h2>
+  <button id="logoutBtn" class="danger">Logout</button>
+</header>
+
+<section class="panel glass controls">
+  <div>
+    <button id="gridBtn" class="active">🔳 Grid</button>
+    <button id="listBtn">📋 List</button>
+  </div>
+
+  <select id="sortSelect">
+    <option value="date">Sort: Date</option>
+    <option value="name">Sort: Name</option>
+    <option value="size">Sort: Size</option>
+  </select>
+</section>
+
+<section class="panel glass">
+  <div id="storageText">0 MB / 15 GB</div>
+  <div class="progress"><div id="storageBar"></div></div>
+</section>
+
+<!-- UPLOAD + FOLDER BAR -->
+<section class="panel glass upload-panel" id="dropZone">
+  <div class="folder-bar">
+    <select id="folderSelect"></select>
+    <button id="folderMenuBtn">⋮</button>
+  </div>
+
+  <button id="newFolderBtn" class="secondary">+ Folder</button>
+  <input type="file" id="fileInput" multiple hidden>
+  <button id="uploadBtn" class="primary">Upload</button>
+  <span class="hint">or drag & drop files here</span>
+</section>
+
+<section id="filesGrid" class="files-grid"></section>
+
+<!-- FOLDER MODAL -->
+<div id="folderModal" class="modal-backdrop">
+  <div class="modal glass">
+    <h3 id="modalTitle">Folder Action</h3>
+
+    <input id="folderInput" type="text" placeholder=" " />
+    <label class="floating">New folder name</label>
+
+    <div class="modal-actions">
+      <button id="confirmBtn" class="primary">Confirm</button>
+      <button id="cancelBtn">Cancel</button>
+      <button id="deleteBtn" class="danger">Delete Folder</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
