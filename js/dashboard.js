@@ -1,6 +1,6 @@
 import { supabase } from "./supabase.js";
 
-const bucket = "user-files";
+const bucket = "user files";
 
 /* ===== DOM ===== */
 const filesGrid = document.getElementById("filesGrid");
