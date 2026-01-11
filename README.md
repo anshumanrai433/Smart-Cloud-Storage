@@ -4,7 +4,7 @@ A modern cloud-based file storage web application built using Supabase and deplo
 It allows users to securely upload, organize, download, and manage files with a clean and luxury UI.
 
 🔗 **Live Demo:**  
-https://anshumanrai433.github.io/smart-cloud-storage/
+https://anshumanrai433.github.io/Smart-Cloud-Storage/
 
 🔗 **GitHub Repository:**  
 https://github.com/anshumanrai433/Smart-Cloud-Storage
