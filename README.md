@@ -45,7 +45,7 @@ https://github.com/anshumanrai433/Smart-Cloud-Storage
 ### 🔹 Step 1: Signup (First Time Only)
 
 1. Open the live website  
-   👉 https://anshumanrai433.github.io/smart-cloud-storage/
+   👉 https://anshumanrai433.github.io/Smart-Cloud-Storage/
 2. Enter your **Email** and **Password**
 3. Click **Sign Up**
 4. Your account will be created successfully
