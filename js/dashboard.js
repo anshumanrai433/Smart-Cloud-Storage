@@ -79,21 +79,18 @@ folderSelect.onchange = () => {
   loadFiles();
 };
 
-/* ===== CREATE FOLDER (REAL FIX) ===== */
+/* ===== CREATE FOLDER ===== */
 newFolderBtn.onclick = async () => {
   const name = prompt("New folder name?");
   if (!name) return;
 
   const dummyPath = `${currentUser.id}/${name}/.keep`;
-
-  // upload empty placeholder file
   const emptyBlob = new Blob([""], { type: "text/plain" });
 
-  await supabase.storage
-    .from(bucket)
-    .upload(dummyPath, emptyBlob, { upsert: true });
+  await supabase.storage.from(bucket).upload(dummyPath, emptyBlob, {
+    upsert: true
+  });
 
-  // insert dummy DB row
   await supabase.from("files").insert({
     user_id: currentUser.id,
     file_name: ".keep",
@@ -153,12 +150,17 @@ confirmBtn.onclick = async () => {
   showToast("Folder renamed");
 };
 
-/* ===== DELETE FOLDER ===== */
+/* ===== DELETE FOLDER (CONFIRMATION ADDED) ===== */
 deleteBtn.onclick = async () => {
   if (currentFolder === "root") {
     showToast("Root folder cannot be deleted");
     return;
   }
+
+  const ok = confirm(
+    `Are you sure you want to delete folder "${currentFolder}"?\nAll files inside will be permanently deleted.`
+  );
+  if (!ok) return;
 
   const { data } = await supabase
     .from("files")
@@ -220,7 +222,7 @@ function renderFiles() {
   });
 }
 
-/* ===== FILE ACTIONS ===== */
+/* ===== FILE ACTIONS (CONFIRM DELETE ADDED) ===== */
 filesGrid.onclick = async (e) => {
   if (e.target.dataset.dl) {
     const { data } = await supabase.storage
@@ -230,6 +232,11 @@ filesGrid.onclick = async (e) => {
   }
 
   if (e.target.dataset.del) {
+    const ok = confirm(
+      "Are you sure you want to delete this file?\nThis action cannot be undone."
+    );
+    if (!ok) return;
+
     const [id, path] = e.target.dataset.del.split("|");
     await supabase.storage.from(bucket).remove([path]);
     await supabase.from("files").delete().eq("id", id);
@@ -238,7 +245,7 @@ filesGrid.onclick = async (e) => {
   }
 };
 
-/* ===== UPLOAD + DRAG DROP ===== */
+/* ===== UPLOAD ===== */
 async function uploadFiles(files) {
   for (const file of files) {
     const path =
@@ -261,6 +268,7 @@ async function uploadFiles(files) {
 uploadBtn.onclick = () => fileInput.click();
 fileInput.onchange = e => uploadFiles(e.target.files);
 
+/* ===== DRAG DROP ===== */
 dropZone.ondragover = e => {
   e.preventDefault();
   dropZone.classList.add("drag");
