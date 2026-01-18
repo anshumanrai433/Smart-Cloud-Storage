@@ -2,19 +2,17 @@ import { supabase } from "./supabase.js";
 
 const loginTab = document.getElementById("loginTab");
 const signupTab = document.getElementById("signupTab");
-
 const loginBox = document.getElementById("loginBox");
 const signupBox = document.getElementById("signupBox");
+const msg = document.getElementById("authMsg");
 
-const authMsg = document.getElementById("authMsg");
-
-/* TAB SWITCH */
+/* ---------- TAB SWITCH ---------- */
 loginTab.onclick = () => {
   loginTab.classList.add("active");
   signupTab.classList.remove("active");
   loginBox.style.display = "block";
   signupBox.style.display = "none";
-  authMsg.textContent = "";
+  msg.textContent = "";
 };
 
 signupTab.onclick = () => {
@@ -22,56 +20,98 @@ signupTab.onclick = () => {
   loginTab.classList.remove("active");
   signupBox.style.display = "block";
   loginBox.style.display = "none";
-  authMsg.textContent = "";
+  msg.textContent = "";
 };
 
-/* LOGIN */
+/* ---------- LOGIN ---------- */
 document.getElementById("loginBtn").onclick = async () => {
-  authMsg.textContent = "Logging in...";
+  msg.style.color = "#eab308";
+  msg.textContent = "Logging in...";
 
-  const email = document.getElementById("loginEmail").value;
-  const password = document.getElementById("loginPassword").value;
+  const email = loginEmail.value;
+  const password = loginPassword.value;
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  });
+  const { data, error } =
+    await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    authMsg.textContent = error.message;
-    authMsg.style.color = "#f87171";
-  } else {
-    location.href = "dashboard.html";
-  }
-};
-
-/* SIGNUP */
-document.getElementById("signupBtn").onclick = async () => {
-  authMsg.textContent = "Creating account...";
-
-  const email = document.getElementById("signupEmail").value;
-  const password = document.getElementById("signupPassword").value;
-
-  if (password.length < 6) {
-    authMsg.textContent = "Password must be at least 6 characters";
-    authMsg.style.color = "#f87171";
+    msg.style.color = "#f87171";
+    msg.textContent = error.message;
     return;
   }
 
+  if (!data.user.email_confirmed_at) {
+    msg.style.color = "#facc15";
+    msg.textContent =
+      "Please verify your email first. Check your inbox.";
+    await supabase.auth.signOut();
+    return;
+  }
+
+  location.href = "dashboard.html";
+};
+
+/* ---------- SIGNUP ---------- */
+document.getElementById("signupBtn").onclick = async () => {
+  const email = signupEmail.value;
+  const password = signupPassword.value;
+
+  if (!email || !password) {
+    msg.style.color = "#f87171";
+    msg.textContent = "Email and password are required.";
+    return;
+  }
+
+  if (password.length < 6) {
+    msg.style.color = "#f87171";
+    msg.textContent = "Password must be at least 6 characters.";
+    return;
+  }
+
+  msg.style.color = "#38bdf8";
+  msg.textContent = "Creating account...";
+
   const { error } = await supabase.auth.signUp({
     email,
-    password
+    password,
+    options: {
+      emailRedirectTo:
+        "https://anshumanrai433.github.io/smart-cloud-storage/welcome.html"
+    }
   });
 
   if (error) {
-    authMsg.textContent = error.message;
-    authMsg.style.color = "#f87171";
+    msg.style.color = "#f87171";
+    msg.textContent = error.message;
   } else {
-    authMsg.textContent =
-      "Account created successfully. Please login.";
-    authMsg.style.color = "#22d3ee";
+    msg.style.color = "#22c55e";
+    msg.textContent =
+      "✅ Confirmation email has been sent to your email address. Please verify to continue.";
 
-    // switch to login
-    loginTab.click();
+    // ❌ NO auto redirect / NO auto login tab switch
+    // User will manually click Login when ready
+  }
+};
+
+/* ---------- FORGOT PASSWORD ---------- */
+document.getElementById("forgotPwd").onclick = async () => {
+  const email = prompt("Enter your registered email address:");
+  if (!email) return;
+
+  msg.style.color = "#38bdf8";
+  msg.textContent = "Sending password reset email...";
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo:
+      "https://anshumanrai433.github.io/smart-cloud-storage/index.html"
+  });
+
+  if (error) {
+    msg.style.color = "#f87171";
+    msg.textContent = error.message;
+  } else {
+    msg.style.color = "#22c55e";
+    msg.textContent =
+      "Password reset email has been sent. Please check your inbox.";
   }
 };
