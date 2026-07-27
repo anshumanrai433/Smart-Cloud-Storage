@@ -28,11 +28,13 @@ document.getElementById("loginBtn").onclick = async () => {
   msg.style.color = "#eab308";
   msg.textContent = "Logging in...";
 
-  const email = loginEmail.value;
+  const email = loginEmail.value.trim();
   const password = loginPassword.value;
 
-  const { data, error } =
-    await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) {
     msg.style.color = "#f87171";
@@ -42,18 +44,17 @@ document.getElementById("loginBtn").onclick = async () => {
 
   if (!data.user.email_confirmed_at) {
     msg.style.color = "#facc15";
-    msg.textContent =
-      "Please verify your email first. Check your inbox.";
+    msg.textContent = "Please verify your email first. Check your inbox.";
     await supabase.auth.signOut();
     return;
   }
 
-  location.href = "dashboard.html";
+  window.location.href = "dashboard.html";
 };
 
 /* ---------- SIGNUP ---------- */
 document.getElementById("signupBtn").onclick = async () => {
-  const email = signupEmail.value;
+  const email = signupEmail.value.trim();
   const password = signupPassword.value;
 
   if (!email || !password) {
@@ -76,21 +77,19 @@ document.getElementById("signupBtn").onclick = async () => {
     password,
     options: {
       emailRedirectTo:
-        "https://anshumanrai433.github.io/smart-cloud-storage/welcome.html"
-    }
+        "https://anshumanrai433.github.io/Smart-Cloud-Storage/welcome.html",
+    },
   });
 
   if (error) {
     msg.style.color = "#f87171";
     msg.textContent = error.message;
-  } else {
-    msg.style.color = "#22c55e";
-    msg.textContent =
-      "✅ Confirmation email has been sent to your email address. Please verify to continue.";
-
-    // ❌ NO auto redirect / NO auto login tab switch
-    // User will manually click Login when ready
+    return;
   }
+
+  msg.style.color = "#22c55e";
+  msg.textContent =
+    "✅ Confirmation email has been sent successfully. Please check your inbox and verify your email.";
 };
 
 /* ---------- FORGOT PASSWORD ---------- */
@@ -103,7 +102,7 @@ document.getElementById("forgotPwd").onclick = async () => {
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo:
-      "https://anshumanrai433.github.io/smart-cloud-storage/index.html"
+      "https://anshumanrai433.github.io/Smart-Cloud-Storage/index.html",
   });
 
   if (error) {
@@ -112,6 +111,6 @@ document.getElementById("forgotPwd").onclick = async () => {
   } else {
     msg.style.color = "#22c55e";
     msg.textContent =
-      "Password reset email has been sent. Please check your inbox.";
+      "Password reset email has been been sent successfully.";
   }
 };
