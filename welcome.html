@@ -1,42 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Verified</title>
-
     <link rel="stylesheet" href="css/welcome.css">
 </head>
-
 <body>
-
     <div class="container">
-
         <div class="card">
-
-            <div class="check">
-                ✓
-            </div>
-
-            <h1>Email Verified!</h1>
-
-            <p>
-                Congratulations! Your Smart Cloud Storage account has been verified successfully.
-            </p>
-
-            <p class="small">
-                You can now login and securely upload, download and manage your files.
-            </p>
-
-            <button onclick="window.location.href='index.html'">
-                Login Now →
-            </button>
-
+            <div class="check">✓</div>
+            <h1 id="status-title">Email Verified!</h1>
+            <p id="status-desc">Congratulations! Your Smart Cloud Storage account has been verified successfully.</p>
+            <p class="small">You can now login and securely upload, download and manage your files.</p>
+            <button onclick="window.location.href='index.html'">Login Now →</button>
         </div>
-
     </div>
 
-</body>
+    <script type="module">
+        import { supabase } from "./js/supabase.js";
 
+        async function verifyEmail() {
+            const hash = window.location.hash;
+            const params = new URLSearchParams(hash.substring(1));
+            const confirmationUrl = params.get("confirmation_url");
+
+            if (!confirmationUrl) return;
+
+            try {
+                const response = await fetch(decodeURIComponent(confirmationUrl));
+                if (!response.ok) {
+                    throw new Error("Verification failed");
+                }
+
+                // Update UI on success
+                document.getElementById("status-title").textContent = "✅ Email Verified Successfully!";
+                document.getElementById("status-desc").textContent = "Your account has been activated. You can now login.";
+                
+                // Clean up URL hash
+                history.replaceState({}, "", "welcome.html");
+            } catch (err) {
+                // Update UI on error
+                document.getElementById("status-title").textContent = "Verification Failed";
+                document.getElementById("status-desc").textContent = "Please try the confirmation link again.";
+            }
+        }
+
+        verifyEmail();
+    </script>
+</body>
 </html>
