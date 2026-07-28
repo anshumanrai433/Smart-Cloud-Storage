@@ -1,13 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Shared File</title>
+  <meta charset="UTF-8" />
+  <title>Access Shared File</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-  <h2>Shared File</h2>
-  <input id="password" placeholder="Password (if required)">
-  <button id="accessBtn">Access File</button>
-  <p id="msg"></p>
+<body class="auth-bg">
+  <div class="container">
+    <div class="auth-card glass">
+      <h2 style="margin-bottom: 10px;">🔒 Access File</h2>
+      <p class="muted">Enter the password to access this shared file.</p>
+      
+      <div class="field">
+        <input id="password" type="password" placeholder=" " />
+        <label>Password (if required)</label>
+      </div>
+      
+      <button id="accessBtn" class="primary full">Unlock File</button>
+      <p id="msg" class="msg"></p>
+    </div>
+  </div>
 
   <script type="module" src="js/share.js"></script>
 </body>
