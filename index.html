@@ -1,62 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Smart Cloud Storage</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8">
+    <title>Smart Cloud Storage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="auth-bg">
 
-  <div class="auth-card glass">
-    <h2>☁ Smart Cloud Storage</h2>
-    <p class="muted">Secure cloud storage for your files</p>
-
-    <!-- Tabs -->
-    <div class="auth-tabs">
-      <button id="loginTab" class="active">Login</button>
-      <button id="signupTab">Create Account</button>
+    <!-- Background -->
+    <div class="bg">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="blob blob3"></div>
+        <div class="grid"></div>
     </div>
 
-    <!-- Login -->
-    <div id="loginBox">
-      <div class="field">
-        <input id="loginEmail" type="email" required placeholder=" " />
-        <label>Email</label>
-      </div>
+    <div class="auth-wrapper">
 
-      <div class="field">
-        <input id="loginPassword" type="password" required placeholder=" " />
-        <label>Password</label>
-      </div>
+        <!-- Left Side -->
+        <div class="hero">
 
-      <button id="loginBtn" class="primary full">Login</button>
+            <div class="logo">
+
+                ☁
+
+            </div>
+
+            <h1>
+
+                Smart Cloud Storage
+
+            </h1>
+
+            <p>
+
+                Store, Manage and Access your files securely from anywhere.
+
+            </p>
+
+            <ul>
+
+                <li>🔒 Secure Authentication</li>
+
+                <li>📂 Folder Management</li>
+
+                <li>☁ Cloud Storage</li>
+
+                <li>⚡ Fast Upload & Download</li>
+
+            </ul>
+
+        </div>
+
+        <!-- Right Side -->
+
+        <div class="auth-card glass">
+
+            <h2>
+
+                Welcome Back
+
+            </h2>
+
+            <p class="muted">
+
+                Login to continue
+
+            </p>
+
+            <div class="auth-tabs">
+
+                <button id="loginTab" class="active">
+
+                    Login
+
+                </button>
+
+                <button id="signupTab">
+
+                    Create Account
+
+                </button>
+
+            </div>
+
+            <!-- LOGIN -->
+
+            <div id="loginBox">
+
+                <div class="field">
+
+                    <input id="loginEmail"
+                        type="email"
+                        required
+                        placeholder=" ">
+
+                    <label>Email Address</label>
+
+                </div>
+
+                <div class="field">
+
+                    <input id="loginPassword"
+                        type="password"
+                        required
+                        placeholder=" ">
+
+                    <label>Password</label>
+
+                </div>
+
+                <button id="loginBtn"
+                    class="primary full">
+
+                    Login
+
+                </button>
+
+            </div>
+
+            <!-- SIGNUP -->
+
+            <div id="signupBox"
+                style="display:none;">
+
+                <div class="field">
+
+                    <input id="signupEmail"
+                        type="email"
+                        required
+                        placeholder=" ">
+
+                    <label>Email Address</label>
+
+                </div>
+
+                <div class="field">
+
+                    <input id="signupPassword"
+                        type="password"
+                        required
+                        placeholder=" ">
+
+                    <label>Password</label>
+
+                </div>
+
+                <p class="hint">
+
+                    Password should contain at least 6 characters.
+
+                </p>
+
+                <button id="signupBtn"
+                    class="secondary full">
+
+                    Create Account
+
+                </button>
+
+            </div>
+
+            <p id="authMsg"
+                class="msg"></p>
+
+            <div class="footer">
+
+                © 2026 Smart Cloud Storage
+
+            </div>
+
+        </div>
+
     </div>
 
-    <!-- Signup -->
-    <div id="signupBox" style="display:none;">
-      <div class="field">
-        <input id="signupEmail" type="email" required placeholder=" " />
-        <label>Email</label>
-      </div>
+    <script type="module"
+        src="js/auth.js"></script>
 
-      <div class="field">
-        <input id="signupPassword" type="password" required placeholder=" " />
-        <label>Password</label>
-      </div>
-
-      <p class="hint">
-        Password must be at least 6 characters
-      </p>
-
-      <button id="signupBtn" class="secondary full">
-        Create Account
-      </button>
-    </div>
-
-    <p id="authMsg" class="msg"></p>
-  </div>
-
-  <script type="module" src="js/auth.js"></script>
 </body>
+
 </html>
