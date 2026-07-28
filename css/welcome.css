@@ -1,175 +1,183 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Segoe UI",sans-serif;
+/* ============================================================
+   SMART CLOUD STORAGE — EMAIL VERIFIED PAGE
+   Same dusk/sunrise glass identity as style.css, self-contained
+   so welcome.html doesn't need to import the dashboard sheet.
+   No HTML/JS was changed — only these selectors are styled.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --ink:      #0A0E1A;
+  --dusk:     #121A30;
+  --gold:     #F0B429;
+  --gold-soft:#F6CC6B;
+  --sky:      #38BDF8;
+  --success:  #22C55E;
+
+  --text-hi:  #EDEFF5;
+  --text-mid: #B8BFD1;
+  --text-low: #8890A4;
+
+  --glass-fill:   rgba(255,255,255,0.06);
+  --glass-fill-2: rgba(255,255,255,0.10);
+  --glass-line:   rgba(210,220,255,0.14);
+
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+
+*{ box-sizing: border-box; }
+
+html, body{
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-hi);
+  background: var(--ink);
+  -webkit-font-smoothing: antialiased;
 }
 
 body{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+}
 
-    height:100vh;
+/* ambient dusk horizon, matching the auth/dashboard identity */
+body::before, body::after{
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+}
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+body::before{
+  background:
+    radial-gradient(38% 32% at 20% 80%, rgba(240,180,41,0.18), transparent 60%),
+    radial-gradient(42% 38% at 80% 15%, rgba(56,189,248,0.14), transparent 60%);
+  animation: drift 24s ease-in-out infinite alternate;
+}
 
-    background:linear-gradient(135deg,#0f172a,#1e293b,#312e81);
+body::after{
+  background: linear-gradient(180deg, var(--ink) 0%, var(--dusk) 60%, #0D1424 100%);
+}
 
-    overflow:hidden;
+@keyframes drift{
+  from{ transform: translate(0,0) scale(1); }
+  to{ transform: translate(3%, -2%) scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body::before{ animation: none; }
 }
 
 .container{
-
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .card{
-
-    width:430px;
-    max-width:90%;
-
-    background:rgba(255,255,255,.08);
-
-    backdrop-filter:blur(20px);
-
-    border-radius:25px;
-
-    padding:45px;
-
-    text-align:center;
-
-    border:1px solid rgba(255,255,255,.1);
-
-    box-shadow:0 15px 35px rgba(0,0,0,.35);
-
-    animation:popup .8s;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  padding: 46px 36px 38px;
+  border-radius: 22px;
+  background: linear-gradient(155deg, var(--glass-fill-2), var(--glass-fill));
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--glass-line);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 24px 60px -24px rgba(0,0,0,0.7);
+  animation: rise .6s var(--ease) both;
 }
 
-@keyframes popup{
-
-    from{
-
-        transform:scale(.75);
-        opacity:0;
-
-    }
-
-    to{
-
-        transform:scale(1);
-        opacity:1;
-
-    }
-
+@keyframes rise{
+  from{ opacity: 0; transform: translateY(16px); }
+  to{ opacity: 1; transform: translateY(0); }
 }
 
+/* signature — checkmark drawn inside a glowing gold ring,
+   standing in for the sunrise breaking through cloud cover */
 .check{
-
-    width:120px;
-    height:120px;
-
-    margin:auto;
-
-    border-radius:50%;
-
-    background:#22c55e;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    color:white;
-
-    font-size:70px;
-
-    animation:bounce 1s;
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.9rem;
+  color: #241703;
+  background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+  box-shadow:
+    0 0 0 6px rgba(240,180,41,0.12),
+    0 14px 32px -10px rgba(240,180,41,0.55);
+  animation: pop .5s var(--ease) .15s both;
 }
 
-@keyframes bounce{
-
-    0%{
-
-        transform:scale(.3) rotate(-180deg);
-
-    }
-
-    100%{
-
-        transform:scale(1);
-
-    }
-
+@keyframes pop{
+  from{ opacity: 0; transform: scale(0.5); }
+  to{ opacity: 1; transform: scale(1); }
 }
 
-h1{
-
-    color:white;
-
-    margin-top:25px;
-
-    font-size:34px;
-
+.card h1{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+  background: linear-gradient(100deg, var(--gold-soft), var(--sky) 120%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-p{
-
-    margin-top:18px;
-
-    color:#d1d5db;
-
-    line-height:28px;
-
-    font-size:18px;
-
+.card p{
+  margin: 0 0 10px;
+  color: var(--text-mid);
+  font-size: 0.95rem;
+  line-height: 1.55;
 }
 
-.small{
-
-    font-size:15px;
-
-    color:#94a3b8;
-
+.card p.small{
+  font-size: 0.82rem;
+  color: var(--text-low);
+  margin-bottom: 30px;
 }
 
-button{
-
-    margin-top:35px;
-
-    width:100%;
-
-    padding:16px;
-
-    border:none;
-
-    border-radius:15px;
-
-    cursor:pointer;
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    color:white;
-
-    background:linear-gradient(90deg,#06b6d4,#3b82f6);
-
-    transition:.35s;
+.card button{
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  padding: 14px 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  color: #241703;
+  background: linear-gradient(135deg, var(--gold), #E0951C);
+  box-shadow: 0 12px 26px -10px rgba(240,180,41,0.6);
+  transition: transform .18s var(--ease), filter .18s var(--ease);
 }
 
-button:hover{
+.card button:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+.card button:active{ transform: translateY(0); }
 
-    transform:translateY(-3px);
-
-    box-shadow:0 12px 25px rgba(59,130,246,.5);
-
+.card button:focus-visible{
+  outline: 2px solid var(--sky);
+  outline-offset: 3px;
 }
 
-button:active{
-
-    transform:scale(.98);
-
+@media (max-width: 480px){
+  .card{ padding: 38px 24px 30px; }
 }
