@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Verified</title>
-    <link rel="stylesheet" href="css/welcome.css">
+    <title>Email Verified | Smart Cloud Storage</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
-        <div class="card">
+        <div class="card glass">
             <div class="check">✓</div>
-            <h1 id="status-title">Email Verified!</h1>
-            <p id="status-desc">Congratulations! Your Smart Cloud Storage account has been verified successfully.</p>
-            <p class="small">You can now login and securely upload, download and manage your files.</p>
-            <button onclick="window.location.href='index.html'">Login Now →</button>
+            <h1 id="status-title" style="margin-bottom: 10px;">Email Verified!</h1>
+            <p id="status-desc" class="muted">Congratulations! Your Smart Cloud Storage account has been verified successfully.</p>
+            <p class="hint">You can now login and securely upload, download and manage your files.</p>
+            <button onclick="window.location.href='index.html'" class="primary full" style="margin-top: 20px;">Proceed to Login →</button>
         </div>
     </div>
 
@@ -32,20 +32,17 @@
                 if (!response.ok) {
                     throw new Error("Verification failed");
                 }
-
-                // Update UI on success
-                document.getElementById("status-title").textContent = "✅ Email Verified Successfully!";
+                document.getElementById("status-title").textContent = "✅ Verification Success!";
                 document.getElementById("status-desc").textContent = "Your account has been activated. You can now login.";
-                
-                // Clean up URL hash
                 history.replaceState({}, "", "welcome.html");
             } catch (err) {
-                // Update UI on error
-                document.getElementById("status-title").textContent = "Verification Failed";
+                document.getElementById("status-title").textContent = "❌ Verification Failed";
                 document.getElementById("status-desc").textContent = "Please try the confirmation link again.";
+                document.querySelector('.check').style.background = 'rgba(239, 68, 68, 0.2)';
+                document.querySelector('.check').style.color = '#ef4444';
+                document.querySelector('.check').textContent = '✗';
             }
         }
-
         verifyEmail();
     </script>
 </body>
